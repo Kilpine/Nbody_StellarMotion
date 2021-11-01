@@ -90,8 +90,8 @@ def potentialenergy(positions,masses):
 '''
 Stating intial values for our simulation including the intial time, final time, timesteps, number of steps, and
 gravitational constant. For Homework 3 we need to put these time steps into intervals. There are two methods that come to mind
-when thinking of how best to do this, slice indices or creating a mask. For the sake of simplicity I will choose to use masks.
-I will also be making tf = 200.0 (tdyn(100 timesteps per tdyn)) to include all potential timesteps (20,000) the problem requires. This mask can be found in the
+when thinking of how best to do this, slice indices or creating a mask. I think both can be used to make this problem very easy. 
+I will also be making tf = 200.0 yr (tdyn(100 timesteps per tdyn)) to include all potential timesteps (20,000) the problem requires. This mask can be found in the
 main() method.
 
 '''
@@ -250,7 +250,6 @@ def main():
     plt.show()
     
     # Energy plotting. Potential energy and kinetic energy look off. I don't know how else to correct the energies besides implementing them into the stellar motion.
-
     f, ax4 = plt.subplots(1, 1, figsize=(6,4))
     plt.scatter(all_time_mask, KE_history[min_mask:max_mask + 1], color = 'plum', label = 'KE')
     plt.scatter(all_time_mask, PE_history[min_mask:max_mask + 1], color = 'mediumorchid', label = 'PE')
