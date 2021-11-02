@@ -137,8 +137,8 @@ def main():
     # Let us let the user choose the minimum and maximum for the mask.
     minimum = int(input('Decide a minimum for Tdyn interval: '))
     maximum = int(input('Decide a maximum for Tdyn interval: '))
-    min_mask = minimum * 100 
-    max_mask = (maximum * 100) - 1 # The subtraction here is to allow the last point of the graph to be the marker points.
+    min_mask = minimum * 1000 
+    max_mask = (maximum * 1000) - 1 # The subtraction here is to allow the last point of the graph to be the marker points.
     mask_length = max_mask - min_mask
     all_time_mask = range(mask_length + 1)
     
@@ -192,12 +192,12 @@ def main():
     ax2.set_aspect('equal', 'box')
     ax3.set_aspect('auto','box')
     ax1.set_title('Stellar Motion', fontsize = 20)
-    limits = (-25, 25)
+    limits = (-20,20)
     ax1.set(xlim = (limits),ylim = (limits),xlabel = ('X position [AU]'), ylabel = ('Y position [AU]'))
     ax2.set(xlim = (limits),ylim = (limits),xlabel = ('X position [AU]'), ylabel = ('Z position [AU]'))
-    ax3.set_xlim3d(-50,50)
-    ax3.set_ylim3d(-50,50)
-    ax3.set_zlim3d(-50,50)
+    ax3.set_xlim3d(-20,20)
+    ax3.set_ylim3d(-20,20)
+    ax3.set_zlim3d(-20,20)
     ax3.set_xlabel('X position [AU]')
     ax3.set_ylabel('Y position [AU]')
     ax3.set_zlabel('Z position [AU]')
@@ -242,21 +242,27 @@ def main():
         ax3.scatter3D(histories_k['x'][min_mask:max_mask], histories_k['y'][min_mask:max_mask], 
         histories_k['z'][min_mask:max_mask], c = range(mask_length), cmap='hot_r')
 
+
     # A few lines to help save the figures we created.
-    to_save = 'Stellar_Intervals_' + str(minimum) + '_to_' + str(maximum)
-    plt.savefig(to_save, dpi = 240)
+    to_save = 'Stellar_Intervals_smallertimestep' + str(minimum) + '_to_' + str(maximum)
+    plt.savefig(to_save, dpi = 300, bbox_inches='tight')
     png_to_convert.append(to_save)
     print('Now creating plots between timesteps: ' + str(minimum) + ' and ' + str(maximum))
     plt.show()
     
-    # Energy plotting. Potential energy and kinetic energy look off. I don't know how else to correct the energies besides implementing them into the stellar motion.
+    # Energy plotting. Potential energy is perhaps too high but by all means looks to me to be written correctly using kinematic equations.
     f, ax4 = plt.subplots(1, 1, figsize=(6,4))
     plt.scatter(all_time_mask, KE_history[min_mask:max_mask + 1], color = 'plum', label = 'KE')
     plt.scatter(all_time_mask, PE_history[min_mask:max_mask + 1], color = 'mediumorchid', label = 'PE')
     plt.scatter(all_time_mask, TotalE_history[min_mask:max_mask + 1], color = 'sienna', label = 'Etotal')
     plt.xlabel('Time [yr]')
-    plt.ylabel('Energy' + r'$[AU^{3}/M_\odot*yr^{2}]$')
+    plt.ylabel('Energy ' + r'$[AU^{3}/M_\odot*yr^{2}]$')
     plt.legend(loc="upper right")
+    
+    # A few lines to help save the energy graphs.
+    to_save = 'Stellar_Energy_Intervals_smallerstimestep' + str(minimum) + '_to_' + str(maximum)
+    plt.savefig(to_save, dpi = 300, bbox_inches='tight')
+    print('Creating energy graphs betweem timestps: ' + str(minimum) + ' and ' + str(maximum))
     plt.show()
 
 # Finally we get to running the simulation with a couple of different options for the user to choose from.
@@ -282,9 +288,3 @@ if multiplotting_answer == 'Y' or multiplotting_answer == 'y':
             print('GIF Created in directory!\nHave a great day!')
 else:
     print('Goodbye!')
-def create_gif(filenames, durations, name):
-    images = []
-    for filename in filenames:
-        images.append(imageio.imread(filename))
-    output_file = name
-    imageio.mimsave(output_file, images, format = 'GIF', duration = durations)
