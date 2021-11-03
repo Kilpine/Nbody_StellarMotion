@@ -244,7 +244,7 @@ def main():
 
 
     # A few lines to help save the figures we created.
-    to_save = 'Stellar_Intervals_smallertimestep' + str(minimum) + '_to_' + str(maximum)
+    to_save = 'Stellar_Intervals_' + str(minimum) + '_to_' + str(maximum)
     plt.savefig(to_save, dpi = 300, bbox_inches='tight')
     png_to_convert.append(to_save)
     print('Now creating plots between timesteps: ' + str(minimum) + ' and ' + str(maximum))
@@ -260,7 +260,7 @@ def main():
     plt.legend(loc="upper right")
     
     # A few lines to help save the energy graphs.
-    to_save = 'Stellar_Energy_Intervals_smallerstimestep' + str(minimum) + '_to_' + str(maximum)
+    to_save = 'Stellar_Energy_Intervals_' + str(minimum) + '_to_' + str(maximum)
     plt.savefig(to_save, dpi = 300, bbox_inches='tight')
     print('Creating energy graphs betweem timestps: ' + str(minimum) + ' and ' + str(maximum))
     plt.show()
